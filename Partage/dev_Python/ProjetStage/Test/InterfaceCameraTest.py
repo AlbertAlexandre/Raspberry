@@ -3,6 +3,7 @@ from tkinter import *
 
 fenetre = Tk()
 fenetre.title('Configuration caméra')
+
 vP = IntVar()
 vAWB = IntVar()
 vMeta = IntVar()
