@@ -1,7 +1,7 @@
-from Vue import *
+from VueV2 import *
 
 def main():
-	interface = Vue()
+	interface = VueV2()
 	
 	return 0
 
