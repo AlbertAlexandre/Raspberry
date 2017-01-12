@@ -1,7 +1,9 @@
 from VueV2 import *
+from ConfigCamera import *
 
 def main():
-	interface = VueV2()
+	#interface = VueV2()
+	interface = Camera()
 	
 	return 0
 

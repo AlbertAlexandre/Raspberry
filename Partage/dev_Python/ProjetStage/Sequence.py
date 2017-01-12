@@ -26,18 +26,12 @@ class Sequence(object):
 		NbSecFreq = float(self.__Freq) * 60
 		TSecPremiere = float(self.__Premiere) * 60
 		Fin = time.time() + NbSecJour
+		
 		self.__Photo__()
 		
 		time.sleep(TSecPremiere)
 		
-		self.Compteur = self.Compteur + 1
-		self.__Photo__()
-		
 		while time.time() < Fin :
-			time.sleep(NbSecFreq)
 			self.Compteur = self.Compteur + 1
 			self.__Photo__()
-			
-			
-
-		
+			time.sleep(NbSecFreq)

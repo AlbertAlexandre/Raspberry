@@ -82,11 +82,10 @@ class VueV2(object):
 		if reponse == True:
 			self.__PrisePhotos__()
 			
-
-	
 	def __PrisePhotos__(self):
 		self.__fenetre.update()
 		SQ = Sequence(self.__sb_jour.get(), self.__sb_TempsPrise1.get(), self.__sb_freq.get())
+		self.__fenetre.update()
 		SQ.__Debut__()
 			
 
