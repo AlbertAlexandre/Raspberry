@@ -3,27 +3,26 @@ from tkinter.messagebox import *
 import datetime
 import time
 from Sequence import *
+from ConfigCamera import *
 
 class VueV2(object):
 	
-	def __init__(self, **kwargs) :		
+	def __init__(self) :		
 		#Creation Fenetre
-		self.__fenetre = Tk()
-		self.__fenetre['bg'] = 'white'
-		self.__fenetre.title('Configuration caméra')
-
-		self.__v = IntVar()
+		self.__root = Tk()
+		self.__root['bg'] = 'white'
+		self.__root.title('Configuration Séquence')
 
 		#Creation Panneau
-		self.__p = PanedWindow(self.__fenetre, orient=VERTICAL)
-		self.__p2 = PanedWindow(self.__fenetre, orient=VERTICAL)
+		self.__p = PanedWindow(self.__root, orient=VERTICAL)
+		self.__p2 = PanedWindow(self.__root, orient=VERTICAL)
 		self.__p.pack(side=LEFT, expand=Y, fill=BOTH)
 		self.__p2.pack(side=RIGHT, expand=Y, fill=BOTH)
 
 
 		#frameNbJour
 
-		self.__frameNbjour = Frame(self.__fenetre, borderwidth=2, relief=GROOVE)
+		self.__frameNbjour = Frame(self.__root, borderwidth=2, relief=GROOVE)
 		self.__frameNbjour.pack(side=TOP, padx=20, pady=20)
 
 		self.__lb_JourSouhaite = Label(self.__frameNbjour, text="Nombre de jour souhaité")
@@ -44,7 +43,7 @@ class VueV2(object):
 		
 		#frameResume
 
-		self.__frameResume = Frame(self.__fenetre, borderwidth=2, relief=GROOVE)
+		self.__frameResume = Frame(self.__root, borderwidth=2, relief=GROOVE)
 		self.__frameResume.pack(side=BOTTOM, padx=20, pady=20)
 		self.__lb_TempsE = Label(self.__frameResume, text="Temps écoulé : ")
 		self.__lb_TempsE.pack()
@@ -57,37 +56,45 @@ class VueV2(object):
 
 		#frameChoix
 
-		self.__frameChoix = Frame(self.__fenetre, borderwidth=2, relief=GROOVE)
+		self.__frameChoix = Frame(self.__root, borderwidth=2, relief=GROOVE)
 		self.__frameChoix.pack(side=LEFT, padx=10, pady=10)
 		self.__btn_Valider = Button(self.__frameChoix, text="Valider", command = self.__Valider__)
 		self.__btn_Valider.pack(side=LEFT)
 		self.__btn_Quitter = Button(self.__frameChoix, text="Annuler", command = self.__RAZ__)
-		self.__btn_Quitter.pack(side=RIGHT)
+		self.__btn_Quitter.pack(side=LEFT)
+		self.__btn_Config = Button(self.__frameChoix, text="Configuration camera", command = self.__InterfaceConfig__)
+		self.__btn_Config.pack(side=LEFT)
 
 		self.__p.add(self.__frameNbjour)
 		self.__p.add(self.__frameChoix)
 		self.__p2.add(self.__frameResume)
 		
-		self.__fenetre.mainloop()
+		self.__root.mainloop()
 		
 		
 	def __RAZ__(self):
 		self.__sb_jour.delete(0, None)
+		self.__sb_jour.insert(0, 0)
 		self.__sb_freq.delete(0, None)
+		self.__sb_freq.insert(0, 0)
 		self.__sb_TempsPrise1.delete(0, None)
+		self.__sb_TempsPrise1.insert(0, 0)
 
 	def __Valider__(self):
 		reponse = askyesno("Confirmation", "Voulez-vous lancer la séquence ?")
-		self.__fenetre.update()
+		self.__root.update()
 		if reponse == True:
 			self.__PrisePhotos__()
 			
 	def __PrisePhotos__(self):
-		self.__fenetre.update()
+		self.__root.update()
 		SQ = Sequence(self.__sb_jour.get(), self.__sb_TempsPrise1.get(), self.__sb_freq.get())
-		self.__fenetre.update()
+		self.__root.update()
 		SQ.__Debut__()
 			
-
+	def __InterfaceConfig__(self):
+		__rootNew = Toplevel()
+		self.__new = ConfigCamera(__rootNew )
 	
-
+if(__name__ == '__main__'):
+	interface = VueV2()
