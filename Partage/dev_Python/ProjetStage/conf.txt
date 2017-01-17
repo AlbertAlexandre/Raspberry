@@ -1,0 +1,1 @@
+ -n -sh 0 -co 0 -br 50 -sa 0 -ISO 100 -awb auto -md 0 -q 100 -ev 0 -ss 0

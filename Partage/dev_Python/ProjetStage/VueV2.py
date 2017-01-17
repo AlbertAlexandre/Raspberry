@@ -7,13 +7,16 @@ from ConfigCamera import *
 
 class VueV2(object):
 	
-	def __init__(self) :		
+	def __init__(self) :
+		
+				
 		#Creation Fenetre
+		
 		self.__root = Tk()
 		self.__root['bg'] = 'white'
 		self.__root.title('Configuration Séquence')
-
 		#Creation Panneau
+		
 		self.__p = PanedWindow(self.__root, orient=VERTICAL)
 		self.__p2 = PanedWindow(self.__root, orient=VERTICAL)
 		self.__p.pack(side=LEFT, expand=Y, fill=BOTH)
@@ -95,6 +98,9 @@ class VueV2(object):
 	def __InterfaceConfig__(self):
 		__rootNew = Toplevel()
 		self.__new = ConfigCamera(__rootNew )
+	
+	def __test__(self):
+		print(self.parametre)
 	
 if(__name__ == '__main__'):
 	interface = VueV2()

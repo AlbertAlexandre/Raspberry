@@ -12,4 +12,6 @@ class Photo(object):
 		self.__Seconde = uneSeconde
 	
 	def __PrendrePhoto__(self, **kwargs):
-		os.system("raspistill -o Photos/" + self.__Nom + ".jpg -awb off -awbg 1.15,1.6")
+		Fichier_Config = open("conf.txt", "r")
+		Config = Fichier_Config.read()
+		os.system("raspistill -o Photos/" + self.__Nom + ".jpg " + Config)

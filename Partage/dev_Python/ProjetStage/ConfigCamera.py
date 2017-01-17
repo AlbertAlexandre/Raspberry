@@ -197,7 +197,8 @@ class ConfigCamera(object):
 		if self.Balance.get() == " -awb off " :
 			Commande = Commande + " -awbg " + self.AWBR.get() + "," + self.AWBB.get()
 		print(Commande)
-		os.system("raspistill -o test.jpg " + Commande)
+		Conf = open("conf.txt", "w")
+		Conf.write(Commande)
 		
 	def __FermerFenetre__(self):
 		self.__root.destroy()
