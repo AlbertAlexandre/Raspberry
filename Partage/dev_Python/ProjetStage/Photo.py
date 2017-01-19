@@ -1,4 +1,5 @@
 import os
+from VueV2 import * 
 
 class Photo(object):
 	
@@ -15,3 +16,6 @@ class Photo(object):
 		Fichier_Config = open("conf.txt", "r")
 		Config = Fichier_Config.read()
 		os.system("raspistill -o Photos/" + self.__Nom + ".jpg " + Config)
+
+	def _test(self):
+		print(VueV2.__lb_Programme)

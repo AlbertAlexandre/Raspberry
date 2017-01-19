@@ -4,6 +4,7 @@ import datetime
 import time
 from Sequence import *
 from ConfigCamera import *
+from Photo import *
 
 class VueV2(object):
 	
@@ -25,7 +26,7 @@ class VueV2(object):
 
 		#frameNbJour
 
-		self.__frameNbjour = Frame(self.__root, borderwidth=2, relief=GROOVE)
+		self.__frameNbjour = Frame(self.__root)
 		self.__frameNbjour.pack(side=TOP, padx=20, pady=20)
 
 		self.__lb_JourSouhaite = Label(self.__frameNbjour, text="Nombre de jour souhaité")
@@ -56,10 +57,25 @@ class VueV2(object):
 		self.__lb_PhotoR.pack()
 		self.__lb_TempsR = Label(self.__frameResume, text="Temps restants : ")
 		self.__lb_TempsR.pack()
+		
+		#Frame espece/programme
+		
+		self.__frameEP = Frame(self.__root)
+		self.__frameEP.pack(side=TOP, fill=BOTH)
+
+		self.__lb_Espece = Label(self.__frameEP, text="Espèce : ")
+		self.__lb_Espece.pack()
+		self.__tb_Espece = Entry(self.__frameEP)
+		self.__tb_Espece.pack()
+		
+		self.__lb_Programme = Label(self.__frameEP, text="Programme : ")
+		self.__lb_Programme.pack()
+		self.__tb_Programme  = Entry(self.__frameEP)
+		self.__tb_Programme.pack()
 
 		#frameChoix
 
-		self.__frameChoix = Frame(self.__root, borderwidth=2, relief=GROOVE)
+		self.__frameChoix = Frame(self.__root, borderwidth=10)
 		self.__frameChoix.pack(side=LEFT, padx=10, pady=10)
 		self.__btn_Valider = Button(self.__frameChoix, text="Valider", command = self.__Valider__)
 		self.__btn_Valider.pack(side=LEFT)
@@ -69,8 +85,10 @@ class VueV2(object):
 		self.__btn_Config.pack(side=LEFT)
 
 		self.__p.add(self.__frameNbjour)
+		self.__p.add(self.__frameEP)
 		self.__p.add(self.__frameChoix)
 		self.__p2.add(self.__frameResume)
+		
 		
 		self.__root.mainloop()
 		
@@ -99,8 +117,6 @@ class VueV2(object):
 		__rootNew = Toplevel()
 		self.__new = ConfigCamera(__rootNew )
 	
-	def __test__(self):
-		print(self.parametre)
 	
 if(__name__ == '__main__'):
 	interface = VueV2()

@@ -1,8 +1,8 @@
 from datetime import *
+import datetime
 import time
 import os
 from Photo import *
-from Vue import *
 
 class Sequence(object):
 	

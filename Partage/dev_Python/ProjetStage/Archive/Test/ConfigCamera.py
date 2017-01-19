@@ -13,9 +13,9 @@ class ConfigCamera(object):
 			self.__root = Tk()
 		
 		self.__root.title('Configuration Caméra')
-		self.vP = IntVar()
-		self.Balance = IntVar()
-		self.vMeta = IntVar()
+		self.vP = StringVar()
+		self.Balance = StringVar()
+		self.vMeta = StringVar()
 		self.Commande = StringVar()
 		self.Exp = StringVar()
 		
@@ -25,10 +25,10 @@ class ConfigCamera(object):
 		self.FramePreview.pack()
 		self.lb_Preview = Label(self.FramePreview, text="Preview")
 		self.lb_Preview.pack(side=LEFT)
-		self.rb_Preview = Radiobutton(self.FramePreview, text="Oui", variable=self.vP, value=1)
+		self.rb_Preview = Radiobutton(self.FramePreview, text="Oui", variable=self.vP, value=" ")
 		self.rb_Preview.pack(side=LEFT)
 		self.rb_Preview.select()
-		self.rb_Preview2 = Radiobutton(self.FramePreview, text="Non", variable=self.vP, value=2)
+		self.rb_Preview2 = Radiobutton(self.FramePreview, text="Non", variable=self.vP, value=" -n ")
 		self.rb_Preview2.pack()
 		
 		#Config Netteté
@@ -56,6 +56,7 @@ class ConfigCamera(object):
 		self.lb_Lumi = Label(self.FrameLumi, text="Luminosité (0/100) : ")
 		self.lb_Lumi.pack(side=LEFT)
 		self.sb_Lumi = Spinbox(self.FrameLumi, from_=0, to=100,width=4)
+		self.sb_Lumi.insert(INSERT,5)
 		self.sb_Lumi.pack(side=RIGHT)
 		
 		#Config Saturation
@@ -73,7 +74,7 @@ class ConfigCamera(object):
 		self.FrameISO.pack()
 		self.lb_ISO = Label(self.FrameISO, text="Sensibilité ISO (100/800) : ")
 		self.lb_ISO.pack(side=LEFT)
-		self.sb_ISO = Spinbox(self.FrameISO, from_=0, to=800,width=4)
+		self.sb_ISO = Spinbox(self.FrameISO, from_=100, to=800,width=4)
 		self.sb_ISO.pack(side=RIGHT)
 		
 		#Compensation EV
@@ -100,11 +101,11 @@ class ConfigCamera(object):
 		self.FrameAWB.pack()
 		self.lb_AWB = Label(self.FrameAWB, text="Balance des blancs : ")
 		self.lb_AWB.pack(side=LEFT)
-		self.rb_AWB = Radiobutton(self.FrameAWB, text="Oui", variable=self.Balance, value = 1,
+		self.rb_AWB = Radiobutton(self.FrameAWB, text="Oui", variable=self.Balance, value = " -awb auto ",
 		 command = self.__Choix__)
 		self.rb_AWB.pack(side=LEFT)
 		self.rb_AWB.select()
-		self.rb_AWB2 = Radiobutton(self.FrameAWB, text="Non", variable=self.Balance, value = 2,
+		self.rb_AWB2 = Radiobutton(self.FrameAWB, text="Non", variable=self.Balance, value = " -awb off ",
 		 command = self.__Choix__)
 		self.rb_AWB2.pack(side=RIGHT)
 		
@@ -141,6 +142,7 @@ class ConfigCamera(object):
 		self.listeReso.insert(END, "640x480 (4:3) 42.1-60 IPS")
 		self.listeReso.insert(END, "640x480 (4:3) 60.1-90 IPS")
 		self.listeReso.config(height=8, width = 28)
+		self.listeReso.selection_set(0,None)
 		self.listeReso.pack()
 		
 		#Config Qualité
@@ -149,7 +151,7 @@ class ConfigCamera(object):
 		self.FrameQual.pack()
 		self.lb_Qual = Label(self.FrameQual, text="Qualité (1/100) : ")
 		self.lb_Qual.pack(side=LEFT)
-		self.sb_Qual = Spinbox(self.FrameQual, from_=1, to=100,width=4)
+		self.sb_Qual = Spinbox(self.FrameQual, from_=1, to=100,width=4, value = 100)
 		self.sb_Qual.pack(side=RIGHT)
 		
 		#Config Métadonnées
@@ -158,172 +160,50 @@ class ConfigCamera(object):
 		self.FrameMeta.pack()
 		self.lb_Meta = Label(self.FrameMeta, text="Métadonnées : ")
 		self.lb_Meta.pack(side=LEFT)
-		self.rb_Meta = Radiobutton(self.FrameMeta, text="Oui", variable=self.vMeta, value=1)
+		self.rb_Meta = Radiobutton(self.FrameMeta, text="Oui", variable=self.vMeta, value=" -r ")
 		self.rb_Meta.pack(side=LEFT)
-		self.rb_Meta2 = Radiobutton(self.FrameMeta, text="Non", variable=self.vMeta, value=2)
+		self.rb_Meta2 = Radiobutton(self.FrameMeta, text="Non", variable=self.vMeta, value=" ")
 		self.rb_Meta2.pack(side=RIGHT)
 		self.rb_Meta2.select()
 
-		#Valider/Annuler/RAZ
+		#Valider/Annuler
 
 		self.FrameChoix = Frame(self.__root, relief=GROOVE, pady = 10)
 		self.FrameChoix.pack()
 		self.btn_Valider = Button(self.FrameChoix, text="Valider", command = self.__Commande__)
 		self.btn_Valider.pack(side=LEFT)
-		self.btn_RAZ = Button(self.FrameChoix, text="Par défaut", command = self.__RAZ__)
-		self.btn_RAZ.pack(side=RIGHT)
 		self.btn_Annuler = Button(self.FrameChoix, text="Annuler", command = self.__FermerFenetre__)
 		self.btn_Annuler.pack(side=RIGHT)
-		
-		
-		self.__Recup__()
 
 		self.__root.mainloop()
 		
-	def __FermerFenetre__(self):
-		self.__root.destroy()
-		
 	def __Choix__(self):
-		if self.Balance.get() == 1 :
+		if self.Balance.get() == " -awb auto " :
 			self.AWBR.delete(0,END)
 			self.AWBR.configure(state="disabled")
 			self.AWBB.delete(0,END)
 			self.AWBB.configure(state="disabled")
-		elif self.Balance.get() == 2 :
+		elif self.Balance.get() == " -awb off " :
 			self.AWBR.configure(state="normal")
 			self.AWBR.insert(END,1.5)
 			self.AWBB.configure(state="normal")
 			self.AWBB.insert(END,1.2)
 			
 	def __Commande__(self):
-		
-		self.__CreationCommande__()
-		self.__CreationEtat__()
-
-		
-	def __CreationCommande__(self):
-		
-		if self.vP.get() == 2:
-			Commande = "-n "
-		else:
-			Commande = ""
-		
-		Commande = Commande + "-sh " + self.sb_Net.get() + " -co " + self.sb_Cont.get() \
-		+ " -br " + self.sb_Lumi.get() + " -sa " + self.sb_Sat.get() + " -ISO " + self.sb_ISO.get()\
-		 + " -ev " + self.sb_EV.get() + " -ss " + self.sb_Exp.get()
-		   
-		if self.Balance.get() == 2 :
-			Commande = Commande + " -awb off -awbg " + self.AWBR.get() + "," + self.AWBB.get()   
-		   
-		Commande = Commande +   " -md " + str(self.listeReso.index(ACTIVE)) + " -q " + self.sb_Qual.get() 
-		
-		if self.vMeta.get() == 1:
-			Commande = Commande + " -r"
-		
+		Commande = self.vP.get() + "-sh " + self.sb_Net.get() + " -co " + self.sb_Cont.get() +\
+		 " -br " + self.sb_Lumi.get() + " -sa " + self.sb_Sat.get() + " -ISO " + self.sb_ISO.get()\
+		  + self.Balance.get() + "-md " + str(self.listeReso.index(ACTIVE)) + " -q " + self.sb_Qual.get()\
+		   + self.vMeta.get() + self.Exp.get() + "-ev " + self.sb_EV.get() + " -ss " + self.sb_Exp.get()
+		if self.Balance.get() == " -awb off " :
+			Commande = Commande + " -awbg " + self.AWBR.get() + "," + self.AWBB.get()
 		print(Commande)
 		Conf = open("conf.txt", "w")
 		Conf.write(Commande)
 		Conf.close()
-		
-	def __CreationEtat__(self):
-		if self.vP.get() == 2:
-			Etat = "2;"
-			
-		else:
-			Etat = "1;"
-		
-		Etat = Etat + self.sb_Net.get() + ";" + self.sb_Cont.get() +\
-		 ";" + self.sb_Lumi.get() + ";" + self.sb_Sat.get() + ";" + self.sb_ISO.get()\
-		   + ";" + self.sb_EV.get() + ";" + self.sb_Exp.get() + ";"
-		   
-		if self.Balance.get() == 2 :
-			Etat = Etat + "2;" + self.AWBR.get() + ";" + self.AWBB.get() +";"
-			
-			
-		else:
-			Etat = Etat + "1;;;"
-		   
-		   
-		Etat = Etat + str(self.listeReso.index(ACTIVE)) + ";" + self.sb_Qual.get()
-			
-		if self.vMeta.get() == 1:
-			Etat = Etat + ";1"
-		
-		else:
-			Etat = Etat + ";2"
-		
-		print(Etat)
-		Statut = open("Etat.txt", "w")
-		Statut.write(Etat)
-		Statut.close()
-		
-	def __Recup__(self):
-		Liste = []
-		Fichier_Etat = open("Etat.txt", "r")
-		AncienEtat = Fichier_Etat.read()
-		for x in AncienEtat.split(";"):
-			Liste.append(x)
-			
-		self.vP.set(Liste[0]) 
-		self.sb_Net.delete(0, None)
-		self.sb_Net.insert(0, Liste[1])
-		self.sb_Cont.delete(0, None)
-		self.sb_Cont.insert(0, Liste[2])
-		self.sb_Lumi.delete(0, None)
-		self.sb_Lumi.insert(0, Liste[3])
-		self.sb_Sat.delete(0, None)
-		self.sb_Sat.insert(0, Liste[4])
-		self.sb_ISO.delete(0, None)
-		self.sb_ISO.insert(0, Liste[5])
-		self.sb_EV.delete(0, None)
-		self.sb_EV.insert(0, Liste[6])
-		self.sb_Exp.delete(0, None)
-		self.sb_Exp.insert(0, Liste[7])
-		self.Balance.set(Liste[8]) 
-		if self.Balance.get() == 1 :
-			self.AWBR.configure(state="disabled")
-			self.AWBB.configure(state="disabled")
-		elif self.Balance.get() == 2 :
-			self.AWBR.configure(state="normal")
-			self.AWBB.configure(state="normal")
-		self.AWBR.delete(0, None)
-		self.AWBR.insert(0, Liste[9])
-		self.AWBB.delete(0, None)
-		self.AWBB.insert(0, Liste[10])
-		self.listeReso.selection_set(Liste[11], None)
-		self.listeReso.activate(Liste[11])
-		self.sb_Qual.delete(0, None)
-		self.sb_Qual.insert(0, Liste[12])
-		self.vMeta.set(Liste[13]) 
-		
-		
-	def __RAZ__(self):
-		self.vP.set(1) 
-		self.sb_Net.delete(0, 10)
-		self.sb_Net.insert(0, 0)
-		self.sb_Cont.delete(0, 10)
-		self.sb_Cont.insert(0, 0)
-		self.sb_Lumi.delete(0, 10)
-		self.sb_Lumi.insert(0, 50)
-		self.sb_Sat.delete(0, 10)
-		self.sb_Sat.insert(0, 0)
-		self.sb_ISO.delete(0, 10)
-		self.sb_ISO.insert(0, 0)
-		self.sb_EV.delete(0, 10)
-		self.sb_EV.insert(0, 0)
-		self.sb_Exp.delete(0, 10)
-		self.sb_Exp.insert(0, 0)
-		self.Balance.set(1)
-		self.AWBR.delete(0,END)
-		self.AWBR.configure(state="disabled")
-		self.AWBB.delete(0,END)
-		self.AWBB.configure(state="disabled")
-		self.listeReso.selection_clear(0,10)
-		self.listeReso.selection_set(0, None)
-		self.listeReso.activate(0)
-		self.sb_Qual.delete(0, 4)
-		self.sb_Qual.insert(0, 100)
-		self.vMeta.set(2) 
+		chaine = open("conf.txt", "r")
+
+	def __FermerFenetre__(self):
+		self.__root.destroy()
 
 if __name__ == '__main__':
 	x = ConfigCamera()
