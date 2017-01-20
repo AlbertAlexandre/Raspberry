@@ -6,17 +6,19 @@ from Photo import *
 
 class Sequence(object):
 	
-	def __init__(self, unNbJour, unePremiere, uneFreq):
+	def __init__(self, unNbJour, unePremiere, uneFreq, uneEspece, unProgramme):
 		
 		self.__NbJour = unNbJour
 		self.__Premiere = unePremiere
 		self.__Freq = uneFreq
+		self.__Espece = uneEspece
+		self.__Programme = unProgramme
 		self.Compteur = 0
 
 	def __Photo__(self) :
 		PH = Photo(str(self.Compteur), datetime.datetime.now().year, datetime.datetime.now().month,
 		 datetime.datetime.now().day,datetime.datetime.now().hour, 
-		 datetime.datetime.now().minute, datetime.datetime.now().second)
+		 datetime.datetime.now().minute, self.__Espece, self.__Programme)
 		PH.__PrendrePhoto__()
 		print("Photo " + str(self.Compteur) + " OK")
 		
@@ -35,3 +37,5 @@ class Sequence(object):
 			self.Compteur = self.Compteur + 1
 			self.__Photo__()
 			time.sleep(NbSecFreq)
+			
+

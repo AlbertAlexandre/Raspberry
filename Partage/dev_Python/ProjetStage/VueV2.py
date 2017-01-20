@@ -3,8 +3,8 @@ from tkinter.messagebox import *
 import datetime
 import time
 from Sequence import *
-from ConfigCamera import *
 from Photo import *
+from ConfigCamera import *
 
 class VueV2(object):
 	
@@ -16,6 +16,11 @@ class VueV2(object):
 		self.__root = Tk()
 		self.__root['bg'] = 'white'
 		self.__root.title('Configuration Séquence')
+		self.CreateWidgets()
+		self.__root.mainloop()
+		
+	def CreateWidgets(self):
+		
 		#Creation Panneau
 		
 		self.__p = PanedWindow(self.__root, orient=VERTICAL)
@@ -90,9 +95,6 @@ class VueV2(object):
 		self.__p2.add(self.__frameResume)
 		
 		
-		self.__root.mainloop()
-		
-		
 	def __RAZ__(self):
 		self.__sb_jour.delete(0, None)
 		self.__sb_jour.insert(0, 0)
@@ -109,14 +111,16 @@ class VueV2(object):
 			
 	def __PrisePhotos__(self):
 		self.__root.update()
-		SQ = Sequence(self.__sb_jour.get(), self.__sb_TempsPrise1.get(), self.__sb_freq.get())
+		SQ = Sequence(self.__sb_jour.get(), self.__sb_TempsPrise1.get(), self.__sb_freq.get(), self.__tb_Espece.get(), self.__tb_Programme.get())
 		self.__root.update()
 		SQ.__Debut__()
 			
 	def __InterfaceConfig__(self):
 		__rootNew = Toplevel()
 		self.__new = ConfigCamera(__rootNew )
-	
-	
+		
+from tkinter import *
+import os
+
 if(__name__ == '__main__'):
 	interface = VueV2()
