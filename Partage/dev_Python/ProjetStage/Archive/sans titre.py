@@ -25,14 +25,39 @@
 
 
 def main():
-	x = "0"
-	print(len(x))
 	
-	
-	while len(x)<3:
-		x = "0" + x
+	def Chaine3(uneChaine):
+		while len(uneChaine)<3:
+			uneChaine = "0" + uneChaine
+		print(uneChaine)
 		
-	print(x)
+	def Annee2(uneAnnee4):
+		Annee2 = str(uneAnnee4)[2:4]
+		print (Annee2)
+		
+	def Chaine2(uneChaine):
+		while len(uneChaine)<2:
+			uneChaine = "0" + uneChaine
+		print(uneChaine)
+		
+	def Espece10(uneChaine):
+		while len(uneChaine)<10:
+			uneChaine = uneChaine + "_" 
+		print(uneChaine)
+	
+	
+	x = "1"
+	Chaine3(x)
+	an = 2017
+	Annee2(an)
+	y = "1"
+	Chaine2(y)
+	esp = "colza"
+	Espece10(esp)
+	
+	
+	
+	
 	return 0
 if __name__ == '__main__':
 	main()

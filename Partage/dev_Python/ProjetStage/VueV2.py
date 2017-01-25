@@ -52,7 +52,7 @@ class VueV2(object):
 		
 		#frameResume
 
-		self.__frameResume = Frame(self.__root, borderwidth=2, relief=GROOVE)
+		"""self.__frameResume = Frame(self.__root, borderwidth=2, relief=GROOVE)
 		self.__frameResume.pack(side=BOTTOM, padx=20, pady=20)
 		self.__lb_TempsE = Label(self.__frameResume, text="Temps écoulé : ")
 		self.__lb_TempsE.pack()
@@ -61,7 +61,7 @@ class VueV2(object):
 		self.__lb_PhotoR = Label(self.__frameResume, text="Photo(s) réstante(s) : ")
 		self.__lb_PhotoR.pack()
 		self.__lb_TempsR = Label(self.__frameResume, text="Temps restants : ")
-		self.__lb_TempsR.pack()
+		self.__lb_TempsR.pack()"""
 		
 		#Frame espece/programme
 		
@@ -88,11 +88,13 @@ class VueV2(object):
 		self.__btn_Quitter.pack(side=LEFT)
 		self.__btn_Config = Button(self.__frameChoix, text="Configuration camera", command = self.__InterfaceConfig__)
 		self.__btn_Config.pack(side=LEFT)
+		self.__btn_Parcourir= Button(self.__frameChoix, text="Parcourir...")
+		self.__btn_Parcourir.pack(side=LEFT)
 
 		self.__p.add(self.__frameNbjour)
 		self.__p.add(self.__frameEP)
 		self.__p.add(self.__frameChoix)
-		self.__p2.add(self.__frameResume)
+		#self.__p2.add(self.__frameResume)
 		
 		
 	def __RAZ__(self):
