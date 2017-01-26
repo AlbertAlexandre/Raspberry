@@ -5,6 +5,7 @@ import time
 from Sequence import *
 from Photo import *
 from ConfigCamera import *
+from tkinter.filedialog import *
 
 class VueV2(object):
 	
@@ -77,6 +78,11 @@ class VueV2(object):
 		self.__lb_Programme.pack()
 		self.__tb_Programme  = Entry(self.__frameEP)
 		self.__tb_Programme.pack()
+		
+		self.__lb_Tempe = Label(self.__frameEP, text="Temperature : ")
+		self.__lb_Tempe.pack()
+		self.__tb_Tempe  = Entry(self.__frameEP, width = 3)
+		self.__tb_Tempe.pack()
 
 		#frameChoix
 
@@ -88,7 +94,7 @@ class VueV2(object):
 		self.__btn_Quitter.pack(side=LEFT)
 		self.__btn_Config = Button(self.__frameChoix, text="Configuration camera", command = self.__InterfaceConfig__)
 		self.__btn_Config.pack(side=LEFT)
-		self.__btn_Parcourir= Button(self.__frameChoix, text="Parcourir...")
+		self.__btn_Parcourir= Button(self.__frameChoix, text="Parcourir...", command = self.__Chemin__)
 		self.__btn_Parcourir.pack(side=LEFT)
 
 		self.__p.add(self.__frameNbjour)
@@ -96,6 +102,17 @@ class VueV2(object):
 		self.__p.add(self.__frameChoix)
 		#self.__p2.add(self.__frameResume)
 		
+	def __Chemin__(self):
+		FichierChemin = open("Chemin.txt", "r")
+		AncienChemin = FichierChemin.read()
+		dossier = askdirectory(initialdir = AncienChemin)
+		try:
+			if len(dossier) != 0:
+				chemin = open("Chemin.txt", "w")
+				chemin.write(dossier)
+				chemin.close()
+		except:
+			pass #0.000694444
 		
 	def __RAZ__(self):
 		self.__sb_jour.delete(0, None)
@@ -113,7 +130,7 @@ class VueV2(object):
 			
 	def __PrisePhotos__(self):
 		self.__root.update()
-		SQ = Sequence(self.__sb_jour.get(), self.__sb_TempsPrise1.get(), self.__sb_freq.get(), self.__tb_Espece.get(), self.__tb_Programme.get())
+		SQ = Sequence(self.__sb_jour.get(), self.__sb_TempsPrise1.get(), self.__sb_freq.get(), self.__tb_Espece.get(), self.__tb_Programme.get(), self.__tb_Tempe.get())
 		self.__root.update()
 		SQ.__Debut__()
 			

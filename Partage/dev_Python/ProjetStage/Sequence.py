@@ -6,13 +6,14 @@ from Photo import *
 
 class Sequence(object):
 	
-	def __init__(self, unNbJour, unePremiere, uneFreq, uneEspece, unProgramme):
+	def __init__(self, unNbJour, unePremiere, uneFreq, uneEspece, unProgramme, uneTemperature):
 		
 		self.__NbJour = unNbJour
 		self.__Premiere = unePremiere
 		self.__Freq = uneFreq
 		self.__Espece = uneEspece
 		self.__Programme = unProgramme
+		self.__Temperature = uneTemperature
 		self.Compteur = 0
 
 	def __Photo__(self, Chemin) :
@@ -30,24 +31,32 @@ class Sequence(object):
 		TSecPremiere = float(self.__Premiere) * 60
 		Fin = time.time() + NbSecJour
 		
+		datedebut = str(datetime.datetime.now())
+		
 		self.__Photo__(Chemin)
 		
 		time.sleep(TSecPremiere)
+		
+		date1 = str(datetime.datetime.now())
 		
 		while time.time() < Fin :
 			self.Compteur = self.Compteur + 1
 			self.__Photo__(Chemin)
 			time.sleep(NbSecFreq)
+		date2 = str(datetime.datetime.now())
+		self.__CreationFichierResume__(Chemin, date1, date2, datedebut)
 			
 	def CreerDossier(self):
 		NumDossier = 0
-		ChaineDossier = "/home/pi/Partage/dev_Python/ProjetStage/Photos/" + self.Annee2(str(datetime.datetime.now().year))\
+		Fichier_Chemin = open("Chemin.txt", "r")
+		LeChemin = Fichier_Chemin.read()
+		ChaineDossier = LeChemin + "/" + self.Annee2(str(datetime.datetime.now().year))\
 		 + "_" + self.Chaine2(str(datetime.datetime.now().month)) + "_" + self.Chaine2(str(datetime.datetime.now().day)) \
 		 + "_" + self.__Programme + "_" + self.__Espece + "_" + str(self.NumCam()) + "_" + self.Chaine2(str(NumDossier))
 		
 		while os.path.exists(ChaineDossier):
 			NumDossier = NumDossier + 1
-			ChaineDossier = "/home/pi/Partage/dev_Python/ProjetStage/Photos/" + self.Annee2(str(datetime.datetime.now().year))\
+			ChaineDossier =  LeChemin + "/" + self.Annee2(str(datetime.datetime.now().year))\
 			+ "_" + self.Chaine2(str(datetime.datetime.now().month)) + "_" + self.Chaine2(str(datetime.datetime.now().day)) \
 			+ "_" + self.__Programme + "_" + self.__Espece + "_" + str(self.NumCam()) + "_" + self.Chaine2(str(NumDossier))
 		os.mkdir(ChaineDossier)
@@ -78,3 +87,24 @@ class Sequence(object):
 		NumCam = NumCam.replace(",","")
 		NumCam = self.Chaine3(NumCam)
 		return(NumCam)
+		
+	def __CreationFichierResume__(self, unChemin, uneDate1, uneDate2, uneDateDebut):
+		
+		freq = float(self.__Freq) * 60
+		tot = float(self.__NbJour) * 86400
+		prem = float(self.__Premiere) * 60
+		
+		Fichier = "Periode : " + str(freq) + "\n" +\
+		"Durée Totale : " + str(tot) + "\n" +\
+		"Durée avant 1ere prise : " + str(prem) + "\n" +\
+		"Date 1er fichier : " + uneDate1 + "\n" +\
+		"Date dernier fichier : " + uneDate2 + "\n" +\
+		"Nombre de photos total : " + str(self.Compteur + 1) + "\n" +\
+		"Date de debut : " + uneDateDebut + "\n" +\
+		"Espece : " + self.__Espece + "\n" +\
+		"Temperature : " + self.__Temperature
+		Resume = open(unChemin + "/Resume.txt", "w")
+		Resume.write(Fichier)
+		Resume.close()
+		
+		
