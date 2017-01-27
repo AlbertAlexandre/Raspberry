@@ -6,7 +6,7 @@ from Photo import *
 
 class Sequence(object):
 	
-	def __init__(self, unNbJour, unePremiere, uneFreq, uneEspece, unProgramme, uneTemperature):
+	def __init__(self, unNbJour, unePremiere, uneFreq, uneEspece, unProgramme, uneTemperature, uneMethode, unID, uneRep, uneMod, unNum, unEmp, unAutre):
 		
 		self.__NbJour = unNbJour
 		self.__Premiere = unePremiere
@@ -14,6 +14,13 @@ class Sequence(object):
 		self.__Espece = uneEspece
 		self.__Programme = unProgramme
 		self.__Temperature = uneTemperature
+		self.__Methode = uneMethode
+		self.__ID = unID
+		self.__Repetition = uneRep
+		self.__Modalite = uneMod
+		self.__NumMod = unNum
+		self.__Emplacement = unEmp
+		self.__Autre = unAutre
 		self.Compteur = 0
 
 	def __Photo__(self, Chemin) :
@@ -102,7 +109,16 @@ class Sequence(object):
 		"Nombre de photos total : " + str(self.Compteur + 1) + "\n" +\
 		"Date de debut : " + uneDateDebut + "\n" +\
 		"Espece : " + self.__Espece + "\n" +\
-		"Temperature : " + self.__Temperature
+		"Temperature : " + self.__Temperature + "\n" +\
+		"Méthode : " + str(self.__Methode) + "\n" +\
+		"Identifiant de l'échantillon : " + str(self.__ID) + "\n" +\
+		"Numero de répétition ou sous-répétition : " + str(self.__Repetition) + "\n" +\
+		"Modalité : " + str(self.__Modalite) + "\n" +\
+		"Numéro de module : " + str(self.__NumMod) + "\n" +\
+		"L'emplacement dans le module : " + str(self.__Emplacement) + "\n" +\
+		"Autre : " + str(self.__Autre)
+		
+		
 		Resume = open(unChemin + "/Resume.txt", "w")
 		Resume.write(Fichier)
 		Resume.close()

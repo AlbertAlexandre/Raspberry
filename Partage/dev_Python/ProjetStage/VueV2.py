@@ -25,7 +25,7 @@ class VueV2(object):
 		#Creation Panneau
 		
 		self.__p = PanedWindow(self.__root, orient=VERTICAL)
-		self.__p2 = PanedWindow(self.__root, orient=VERTICAL)
+		self.__p2 = PanedWindow(self.__root, orient=HORIZONTAL)
 		self.__p.pack(side=LEFT, expand=Y, fill=BOTH)
 		self.__p2.pack(side=RIGHT, expand=Y, fill=BOTH)
 
@@ -33,7 +33,7 @@ class VueV2(object):
 		#frameNbJour
 
 		self.__frameNbjour = Frame(self.__root)
-		self.__frameNbjour.pack(side=TOP, padx=20, pady=20)
+		self.__frameNbjour.pack(side=TOP)
 
 		self.__lb_JourSouhaite = Label(self.__frameNbjour, text="Nombre de jour souhaité")
 		self.__lb_JourSouhaite.pack()
@@ -67,7 +67,7 @@ class VueV2(object):
 		#Frame espece/programme
 		
 		self.__frameEP = Frame(self.__root)
-		self.__frameEP.pack(side=TOP, fill=BOTH)
+		self.__frameEP.pack(side=LEFT, fill=BOTH)
 
 		self.__lb_Espece = Label(self.__frameEP, text="Espèce : ")
 		self.__lb_Espece.pack()
@@ -81,24 +81,70 @@ class VueV2(object):
 		
 		self.__lb_Tempe = Label(self.__frameEP, text="Temperature : ")
 		self.__lb_Tempe.pack()
-		self.__tb_Tempe  = Entry(self.__frameEP, width = 3)
+		self.__tb_Tempe  = Entry(self.__frameEP)
 		self.__tb_Tempe.pack()
+		
+		self.__lb_Meth = Label(self.__frameEP, text="Methode : ")
+		self.__lb_Meth.pack()
+		self.__tb_Meth  = Entry(self.__frameEP)
+		self.__tb_Meth.pack()
+		
+		self.__lb_ID = Label(self.__frameEP, text="ID échantillon : ")
+		self.__lb_ID.pack()
+		self.__tb_ID  = Entry(self.__frameEP)
+		self.__tb_ID.pack()
+		
+		
+		
+		self.__frameSUITE = Frame(self.__root)
+		self.__frameSUITE.pack(side=RIGHT, fill=BOTH)
+		
+		self.__lb_Rep = Label(self.__frameSUITE, text="Répétition / sous-répétition : ")
+		self.__lb_Rep.pack()
+		self.__tb_Rep = Entry(self.__frameSUITE)
+		self.__tb_Rep.pack()
+		
+		self.__lb_Mod = Label(self.__frameSUITE, text="Modalité : ")
+		self.__lb_Mod.pack()
+		self.__tb_Mod  = Entry(self.__frameSUITE)
+		self.__tb_Mod.pack()
+		
+		self.__lb_Num = Label(self.__frameSUITE, text="Numéro de module : ")
+		self.__lb_Num.pack()
+		self.__tb_Num  = Entry(self.__frameSUITE)
+		self.__tb_Num.pack()
+		
+		self.__lb_Empl = Label(self.__frameSUITE, text="Emplacement dans le module : ")
+		self.__lb_Empl.pack()
+		self.__tb_Empl  = Entry(self.__frameSUITE)
+		self.__tb_Empl.pack()
+		
+		self.__lb_Autre = Label(self.__frameSUITE, text="Autre : ")
+		self.__lb_Autre.pack()
+		self.__tb_Autre  = Entry(self.__frameSUITE)
+		self.__tb_Autre.pack()
+		
+		self.__btn_Config = Button(self.__frameSUITE, text="Configuration camera", command = self.__InterfaceConfig__)
+		self.__btn_Config.pack()
 
+		
+		self.__btn_Parcourir= Button(self.__frameEP, text="Parcourir...", command = self.__Chemin__)
+		self.__btn_Parcourir.pack()
+
+		
 		#frameChoix
 
 		self.__frameChoix = Frame(self.__root, borderwidth=10)
-		self.__frameChoix.pack(side=LEFT, padx=10, pady=10)
+		self.__frameChoix.pack(side=LEFT)
 		self.__btn_Valider = Button(self.__frameChoix, text="Valider", command = self.__Valider__)
 		self.__btn_Valider.pack(side=LEFT)
 		self.__btn_Quitter = Button(self.__frameChoix, text="Annuler", command = self.__RAZ__)
 		self.__btn_Quitter.pack(side=LEFT)
-		self.__btn_Config = Button(self.__frameChoix, text="Configuration camera", command = self.__InterfaceConfig__)
-		self.__btn_Config.pack(side=LEFT)
-		self.__btn_Parcourir= Button(self.__frameChoix, text="Parcourir...", command = self.__Chemin__)
-		self.__btn_Parcourir.pack(side=LEFT)
+
 
 		self.__p.add(self.__frameNbjour)
-		self.__p.add(self.__frameEP)
+		self.__p2.add(self.__frameEP)
+		self.__p2.add(self.__frameSUITE)
 		self.__p.add(self.__frameChoix)
 		#self.__p2.add(self.__frameResume)
 		
@@ -130,7 +176,7 @@ class VueV2(object):
 			
 	def __PrisePhotos__(self):
 		self.__root.update()
-		SQ = Sequence(self.__sb_jour.get(), self.__sb_TempsPrise1.get(), self.__sb_freq.get(), self.__tb_Espece.get(), self.__tb_Programme.get(), self.__tb_Tempe.get())
+		SQ = Sequence(self.__sb_jour.get(), self.__sb_TempsPrise1.get(), self.__sb_freq.get(), self.__tb_Espece.get(), self.__tb_Programme.get(), self.__tb_Tempe.get(), self.__tb_Meth.get(), self.__tb_ID.get(), self.__tb_Rep.get(), self.__tb_Mod.get(), self.__tb_Num.get(), self.__tb_Empl.get(), self.__tb_Autre.get())
 		self.__root.update()
 		SQ.__Debut__()
 			

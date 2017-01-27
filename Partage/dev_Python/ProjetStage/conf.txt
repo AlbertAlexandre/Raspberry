@@ -1,1 +1,1 @@
--sh 0 -co 0 -br 50 -sa 0 -ISO 0 -ev 0 -ss 0 -md 0 -q 100
+-n -sh 0 -co 0 -br 50 -sa 0 -ISO 0 -ev 0 -ss 0 -md 0 -q 100
