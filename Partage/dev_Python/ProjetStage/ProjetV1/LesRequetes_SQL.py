@@ -23,9 +23,12 @@
         self.__LaRequete = laRequete
 
 
-    def SQL_loadListedesJoueurs(self):
-        
-        laRequete = "SELECT c10_Nom FROM t11_Configuration WHERE 1"	
+    def SQL_loadListedesJoueurs(self, commencant= None):
+        """Return la requête SQL pour charger la liste des noms  des joueurs sépcial Combobox (un paramètre optionels : 'commencant') ... """
+        laRequete = """SELECT c10_id as Id, CONCAT_WS(' ',c10_prenom , c10_nom , '(',c10_alias_nom, ')') as joueur FROM t10_individus """
+        if commencant != None :
+            laRequete += " where CONCAT_WS(' ',c10_prenom , c10_nom ,c10_alias_nom) like '%{}%' ".format(commencant)
+        laRequete += " order by c10_prenom , c10_nom "
         # on renseigne la requête SQL
         self.__LaRequete = laRequete
 
@@ -45,8 +48,7 @@
         self.__LaRequete = laRequete
 
     def SQL_insertUnIndividu(self, Individu):
-
-		##Return la requête SQL pour insérer un enregistrement dans la table t10_individus##
+        """Return la requête SQL pour insérer un enregistrement dans la table t10_individus """
         laRequete = " INSERT INTO t10_individus (c10_nom , c10_prenom , c10_date_naissance , c10_mail , c10_alias_nom , c10_c20_id , c10_password) VALUES ( "
         if Individu[1] : laRequete += "  '{}'".format(Individu[1])
         else : laRequete += "  null"
@@ -64,27 +66,6 @@
         else : laRequete += ", null"
         laRequete += " )"
         # on renseigne la requête SQL
-        self.__LaRequete = laRequete
-        
-    def SQL_insertUneCommande(self, Configuration):
-        print(Configuration)
-        laRequete = " INSERT INTO t11_Configuration (c10_Nom , c10_Preview , c10_Nettete , c10_Contraste , c10_Luminosite, c10_Saturation, c10_Sensibilite_ISO, c10_Compensation_EV, c10_Exposition, c10_AWB, c10_AWBGR, c10_AWBGB, c10_Resolution, c10_Qualite, c10_Metadonnee) VALUES ( "
-        laRequete += " 'unNom'"
-        laRequete += ", '{}'".format(Configuration[0])
-        laRequete += ", '{}'".format(Configuration[1])
-        laRequete += ", '{}'".format(Configuration[2])
-        laRequete += ", '{}'".format(Configuration[3])
-        laRequete += ", '{}'".format(Configuration[4])
-        laRequete += ", '{}'".format(Configuration[5])
-        laRequete += ", '{}'".format(Configuration[6])
-        laRequete += ", '{}'".format(Configuration[7])
-        laRequete += ", '{}'".format(Configuration[8])
-        laRequete += ", '{}'".format(Configuration[9])
-        laRequete += ", '{}'".format(Configuration[10])
-        laRequete += ", '{}'".format(Configuration[11])
-        laRequete += ", '{}'".format(Configuration[12])
-        laRequete += ", '{}'".format(Configuration[13])
-        laRequete += " )"
         self.__LaRequete = laRequete
 
     def SQL_UpdateUnIndividu(self, Individu):

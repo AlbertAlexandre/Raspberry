@@ -1,0 +1,17 @@
+Periode : 0.0
+Durée Totale : 0.0
+Durée avant 1ere prise : 0.0
+Date 1er fichier : 2017-01-31 14:44:18.543399
+Date dernier fichier : 2017-01-31 14:44:18.544158
+Nombre de photos total : 1
+Date de debut : 2017-01-31 14:44:18.441162
+Espece : 
+Programme : 
+Temperature : 
+Méthode : 
+Identifiant de l'échantillon : 
+Numero de répétition ou sous-répétition : 
+Modalité : 
+Numéro de module : 
+L'emplacement dans le module : 
+Autre : 

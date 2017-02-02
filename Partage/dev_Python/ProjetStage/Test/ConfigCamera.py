@@ -1,8 +1,5 @@
-from tkinter.ttk import *
 from tkinter import *
 import os
-from Donnees_SQL import *
-
 
 class ConfigCamera(object):
 	
@@ -28,17 +25,15 @@ class ConfigCamera(object):
 		self.vMeta = IntVar()
 		self.Commande = StringVar()
 		self.Exp = StringVar()
-		self.laSelection = StringVar()
-		self.CurrentIndexListe = 0
 		
-		#Mode
+		#Frame Nom
 		
-		self.FrameMode = Frame(self.__root, relief=GROOVE, pady = 3)
-		self.FrameMode.pack()
-		
-		self.cb_Mode = Combobox(self.FrameMode, textvariable = self.laSelection)
-		self.cb_Mode.pack()
-
+		self.FrameNom = Frame(self.__root, relief=GROOVE, pady = 3)
+		self.FrameNom.pack()
+		self.lb_Nom = Label(self.FrameNom, text="Nom : ")
+		self.lb_Nom.pack(side=LEFT)
+		self.sb_Nom = Entry(self.FrameNom)
+		self.sb_Nom.pack(side=RIGHT)
 		
 		#Config Preview
 
@@ -74,7 +69,7 @@ class ConfigCamera(object):
 
 		self.FrameLumi = Frame(self.__root, relief=GROOVE, pady = 3)
 		self.FrameLumi.pack()
-		self.lb_Lumi = Label(self.FrameLumi, text="Luminosité (0/100) : ", padx = 24)
+		self.lb_Lumi = Label(self.FrameLumi, text="Luminosité (0/100) : ", padx = 25)
 		self.lb_Lumi.pack(side=LEFT)
 		self.sb_Lumi = Spinbox(self.FrameLumi, from_=0, to=100,width=4)
 		self.sb_Lumi.pack(side=RIGHT)
@@ -194,9 +189,7 @@ class ConfigCamera(object):
 		self.btn_RAZ = Button(self.FrameChoix, text="Par défaut", command = self.__RAZ__)
 		self.btn_RAZ.pack(side=RIGHT)
 		self.btn_Annuler = Button(self.FrameChoix, text="Annuler", command = self.__FermerFenetre__)
-		self.btn_Annuler.pack(side=LEFT)
-		self.btn_Save = Button(self.FrameChoix, text="Sauvegarder", command = self.__Sauvegarde__)
-		self.btn_Save.pack(side=RIGHT)
+		self.btn_Annuler.pack(side=RIGHT)
 		
 	def __FermerFenetre__(self):
 		#Ferme la fenetre
@@ -280,14 +273,6 @@ class ConfigCamera(object):
 		Statut = open("Etat.txt", "w")
 		Statut.write(Etat)
 		Statut.close()
-	
-	def __Sauvegarde__(self):
-		
-		Config = [self.vP.get(), self.sb_Net.get(), self.sb_Cont.get(), self.sb_Lumi.get(), self.sb_Sat.get(), self.sb_ISO.get(), self.sb_EV.get(), self.sb_Exp.get(), self.Balance.get(), self.AWBR.get(), self.AWBB.get(), str(self.listeReso.index(ACTIVE)), self.sb_Qual.get(), self.vMeta.get()]
-		ConnexionString = {'user': 'newuser' ,'password': 'newuser.56' ,'host': '172.16.22.107' ,'database': 'base_projets'}
-		donnees = Donnees_SQL(ConnexionString)
-		donnees.SQL_insertUneCommande(Config)
-		result = donnees.executerlaRequeteSQL()
 		
 	def __Recup__(self):
 		#Recupere les valeurs des champs
