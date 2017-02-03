@@ -25,7 +25,7 @@
 
     def SQL_loadListedesModes(self):
         
-        laRequete = "SELECT c10_Nom FROM t11_Configuration WHERE 1"	
+        laRequete = "SELECT c10_Nom FROM t11_Configuration WHERE 1 ORDER BY c10_Nom"	
         # on renseigne la requête SQL
         self.__LaRequete = laRequete
         
