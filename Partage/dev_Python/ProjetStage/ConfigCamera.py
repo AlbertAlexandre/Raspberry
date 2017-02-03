@@ -1,4 +1,5 @@
 from tkinter.ttk import *
+from tkinter.messagebox import *
 from tkinter import *
 import os
 from Donnees_SQL import *
@@ -18,6 +19,7 @@ class ConfigCamera(object):
 		self.__root.title('Configuration Caméra')
 		self.CreateWidgets()
 		self.__Recup__()
+		self.__aff_LaListeDesModes()
 		self.__root.mainloop()
 		
 	def CreateWidgets(self):
@@ -37,6 +39,7 @@ class ConfigCamera(object):
 		self.FrameMode.pack()
 		
 		self.cb_Mode = Combobox(self.FrameMode, textvariable = self.laSelection)
+		self.cb_Mode.bind('<<ComboboxSelected>>', self.loadConfiguration)
 		self.cb_Mode.pack()
 
 		
@@ -201,7 +204,87 @@ class ConfigCamera(object):
 	def __FermerFenetre__(self):
 		#Ferme la fenetre
 		self.__root.destroy()
+
+	def loadConfiguration(self, event):
+		ConnexionString = {'user': 'newuser' ,'password': 'newuser.56' ,'host': '172.16.22.107' ,'database': 'base_projets'}
+		donnees = Donnees_SQL(ConnexionString)
+		donnees.SQL_loadLeMode(self.cb_Mode.get())
+		result = donnees.chargerLesDonnees_RequeteSQL()
+		result = str(result).replace("bytearray", "")
+		result = result.replace("(", "")
+		result = result.replace(")", "")
+		result = result.replace("b'", "")
+		result = result.replace("'", "")
+		result = result.replace("[", "")
+		result = result.replace("]", "")
+		result = result.replace(" ", "")
+		print(result)
+		listResult = result.split(",")
+		print(listResult)
+		self.ModifLoad(listResult)
 		
+	def ModifLoad(self, uneListe):
+		self.vP.set(uneListe[2])
+		self.sb_Net.delete(0, 100)
+		self.sb_Net.insert(0, uneListe[3])
+		self.sb_Cont.delete(0, 100)
+		self.sb_Cont.insert(0, uneListe[4])
+		self.sb_Lumi.delete(0, 100)
+		self.sb_Lumi.insert(0, uneListe[5])
+		self.sb_Sat.delete(0, 100)
+		self.sb_Sat.insert(0, uneListe[6])
+		self.sb_ISO.delete(0, 100)
+		self.sb_ISO.insert(0, uneListe[7])
+		self.sb_EV.delete(0, 100)
+		self.sb_EV.insert(0, uneListe[8])
+		self.sb_Exp.delete(0, 100)
+		self.sb_Exp.insert(0, uneListe[9])
+		self.Balance.set(uneListe[10]) 
+		if self.Balance.get() == 1 :
+			self.AWBR.delete(0, 100)
+			self.AWBB.delete(0, 100)
+			self.AWBR.configure(state="disabled")
+			self.AWBB.configure(state="disabled")
+		elif self.Balance.get() == 2 :
+			self.AWBR.configure(state="normal")
+			self.AWBB.configure(state="normal")
+		self.AWBR.delete(0, 100)
+		self.AWBR.insert(0, uneListe[11])
+		self.AWBB.delete(0, 100)
+		self.AWBB.insert(0, uneListe[12])
+		self.listeReso.selection_set(uneListe[13], None)
+		self.listeReso.activate(uneListe[13])
+		self.sb_Qual.delete(0, 100)
+		self.sb_Qual.insert(0, uneListe[14])
+		self.vMeta.set(uneListe[15]) 
+		
+	def __aff_LaListeDesModes(self):
+		ConnexionString = {'user': 'newuser' ,'password': 'newuser.56' ,'host': '172.16.22.107' ,'database': 'base_projets'}
+		donnees = Donnees_SQL(ConnexionString)
+		""" affiche la liste des joueurs existants de la base de données dans le Combobox..."""
+		LaListeDesModes = []
+		# -- on renseigne le code de la requête SQL
+		donnees.SQL_loadListedesModes()
+		# -- on rempli la liste des joueurs...
+		LaListeDesModes = donnees.chargerLesDonnees_RequeteSQL()
+		# -- si la liste existe...
+		laListe  = [""]
+		# -- on met en forme la liste à afficher dans la Combobox
+		for row in LaListeDesModes:
+			a = str(row).replace("bytearray", "")
+			a = a.replace("(", "")
+			a = a.replace(")", "")
+			a = a.replace("b'", "")
+			a = a.replace("'", "")
+			a = a.replace(",", "")
+			laListe.append(a)
+		# -- on sélectionne la première occurence de la liste.
+		self.laSelection.set(laListe[self.CurrentIndexListe])
+		# -- on renseigne la combobox avec la liste mis en forme
+		self.cb_Mode.config( values = laListe , state = NORMAL )
+		#aff_individu()
+	
+	
 	def __Choix__(self):
 		#Agit sur les champ en fonction du radiobutton
 		if self.Balance.get() == 1 :
@@ -283,11 +366,13 @@ class ConfigCamera(object):
 	
 	def __Sauvegarde__(self):
 		
-		Config = [self.vP.get(), self.sb_Net.get(), self.sb_Cont.get(), self.sb_Lumi.get(), self.sb_Sat.get(), self.sb_ISO.get(), self.sb_EV.get(), self.sb_Exp.get(), self.Balance.get(), self.AWBR.get(), self.AWBB.get(), str(self.listeReso.index(ACTIVE)), self.sb_Qual.get(), self.vMeta.get()]
+		Config = [self.cb_Mode.get(), self.vP.get(), self.sb_Net.get(), self.sb_Cont.get(), self.sb_Lumi.get(), self.sb_Sat.get(), self.sb_ISO.get(), self.sb_EV.get(), self.sb_Exp.get(), self.Balance.get(), self.AWBR.get(), self.AWBB.get(), str(self.listeReso.index(ACTIVE)), self.sb_Qual.get(), self.vMeta.get()]
 		ConnexionString = {'user': 'newuser' ,'password': 'newuser.56' ,'host': '172.16.22.107' ,'database': 'base_projets'}
 		donnees = Donnees_SQL(ConnexionString)
 		donnees.SQL_insertUneCommande(Config)
 		result = donnees.executerlaRequeteSQL()
+		showinfo("Information","Configuration sauvegardée")
+		self.__aff_LaListeDesModes()
 		
 	def __Recup__(self):
 		#Recupere les valeurs des champs
@@ -299,19 +384,19 @@ class ConfigCamera(object):
 			Liste.append(x)
 			
 		self.vP.set(Liste[0]) 
-		self.sb_Net.delete(0, None)
+		self.sb_Net.delete(0, 100)
 		self.sb_Net.insert(0, Liste[1])
-		self.sb_Cont.delete(0, None)
+		self.sb_Cont.delete(0, 100)
 		self.sb_Cont.insert(0, Liste[2])
-		self.sb_Lumi.delete(0, None)
+		self.sb_Lumi.delete(0, 100)
 		self.sb_Lumi.insert(0, Liste[3])
-		self.sb_Sat.delete(0, None)
+		self.sb_Sat.delete(0, 100)
 		self.sb_Sat.insert(0, Liste[4])
-		self.sb_ISO.delete(0, None)
+		self.sb_ISO.delete(0, 100)
 		self.sb_ISO.insert(0, Liste[5])
-		self.sb_EV.delete(0, None)
+		self.sb_EV.delete(0, 100)
 		self.sb_EV.insert(0, Liste[6])
-		self.sb_Exp.delete(0, None)
+		self.sb_Exp.delete(0, 100)
 		self.sb_Exp.insert(0, Liste[7])
 		self.Balance.set(Liste[8]) 
 		if self.Balance.get() == 1 :
@@ -320,13 +405,13 @@ class ConfigCamera(object):
 		elif self.Balance.get() == 2 :
 			self.AWBR.configure(state="normal")
 			self.AWBB.configure(state="normal")
-		self.AWBR.delete(0, None)
+		self.AWBR.delete(0, 100)
 		self.AWBR.insert(0, Liste[9])
-		self.AWBB.delete(0, None)
+		self.AWBB.delete(0, 100)
 		self.AWBB.insert(0, Liste[10])
 		self.listeReso.selection_set(Liste[11], None)
 		self.listeReso.activate(Liste[11])
-		self.sb_Qual.delete(0, None)
+		self.sb_Qual.delete(0, 100)
 		self.sb_Qual.insert(0, Liste[12])
 		self.vMeta.set(Liste[13]) 
 		
@@ -359,6 +444,8 @@ class ConfigCamera(object):
 		self.sb_Qual.delete(0, 4)
 		self.sb_Qual.insert(0, 100)
 		self.vMeta.set(2) 
+
+	
 
 if __name__ == '__main__':
 	x = ConfigCamera()

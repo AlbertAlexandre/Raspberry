@@ -23,9 +23,14 @@
         self.__LaRequete = laRequete
 
 
-    def SQL_loadListedesJoueurs(self):
+    def SQL_loadListedesModes(self):
         
         laRequete = "SELECT c10_Nom FROM t11_Configuration WHERE 1"	
+        # on renseigne la requête SQL
+        self.__LaRequete = laRequete
+        
+    def SQL_loadLeMode(self, unNom):
+        laRequete = " SELECT * FROM t11_Configuration WHERE c10_Nom = '" + unNom + "'"
         # on renseigne la requête SQL
         self.__LaRequete = laRequete
 
@@ -69,8 +74,7 @@
     def SQL_insertUneCommande(self, Configuration):
         print(Configuration)
         laRequete = " INSERT INTO t11_Configuration (c10_Nom , c10_Preview , c10_Nettete , c10_Contraste , c10_Luminosite, c10_Saturation, c10_Sensibilite_ISO, c10_Compensation_EV, c10_Exposition, c10_AWB, c10_AWBGR, c10_AWBGB, c10_Resolution, c10_Qualite, c10_Metadonnee) VALUES ( "
-        laRequete += " 'unNom'"
-        laRequete += ", '{}'".format(Configuration[0])
+        laRequete += " '{}'".format(Configuration[0])
         laRequete += ", '{}'".format(Configuration[1])
         laRequete += ", '{}'".format(Configuration[2])
         laRequete += ", '{}'".format(Configuration[3])
@@ -84,6 +88,7 @@
         laRequete += ", '{}'".format(Configuration[11])
         laRequete += ", '{}'".format(Configuration[12])
         laRequete += ", '{}'".format(Configuration[13])
+        laRequete += ", '{}'".format(Configuration[14])
         laRequete += " )"
         self.__LaRequete = laRequete
 
