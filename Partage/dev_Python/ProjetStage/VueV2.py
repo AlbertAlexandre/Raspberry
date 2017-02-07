@@ -37,7 +37,7 @@ class VueV2(object):
 		self.__frameNbjour = Frame(self.__root)
 		self.__frameNbjour.pack(side=TOP)
 
-		self.__lb_JourSouhaite = Label(self.__frameNbjour, text="Nombre de jour souhaité")
+		self.__lb_JourSouhaite = Label(self.__frameNbjour, text="Nombre de jours souhaités")
 		self.__lb_JourSouhaite.pack()
 		self.__sb_jour = Spinbox(self.__frameNbjour, from_=0, to=10,width=3)
 		self.__sb_jour.pack()
@@ -51,6 +51,26 @@ class VueV2(object):
 		self.__lb_freq.pack()
 		self.__sb_freq = Spinbox(self.__frameNbjour, from_=0, to=600,width=3)
 		self.__sb_freq.pack()
+		
+		#frameDateDebut
+		
+		self.__frameDebut = Frame(self.__root)
+		self.__frameDebut.pack(side=TOP)
+
+		self.__lb_Debut = Label(self.__frameDebut, text="Heure début nuit (HH)")
+		self.__lb_Debut.pack()
+		self.__sb_Debut = Entry(self.__frameDebut, width=3)
+		self.__sb_Debut.pack()
+		
+		#frameDateDebut
+		
+		self.__frameFin = Frame(self.__root)
+		self.__frameFin.pack(side=TOP)
+
+		self.__lb_Fin = Label(self.__frameFin, text="Heure fin nuit (HH)")
+		self.__lb_Fin.pack()
+		self.__sb_Fin = Entry(self.__frameFin, width=3)
+		self.__sb_Fin.pack()
 
 		
 		#frameResume
@@ -128,7 +148,7 @@ class VueV2(object):
 		self.__tb_Autre  = Entry(self.__frameSUITE)
 		self.__tb_Autre.pack()
 		
-		self.__btn_Config = Button(self.__frameSUITE, text="Configuration camera", command = self.__InterfaceConfig__)
+		self.__btn_Config = Button(self.__frameSUITE, text="Configuration caméra", command = self.__InterfaceConfig__)
 		self.__btn_Config.pack()
 
 		
@@ -147,6 +167,8 @@ class VueV2(object):
 
 
 		self.__p.add(self.__frameNbjour)
+		self.__p.add(self.__frameDebut)
+		self.__p.add(self.__frameFin)
 		self.__p2.add(self.__frameEP)
 		self.__p2.add(self.__frameSUITE)
 		self.__p.add(self.__frameChoix)
@@ -176,16 +198,16 @@ class VueV2(object):
 		self.__sb_freq.insert(0, 0)
 		self.__sb_TempsPrise1.delete(0, 100)
 		self.__sb_TempsPrise1.insert(0, 0)
-		self.__tb_Espece.delete(0, None)
-		self.__tb_Programme.delete(0, None)
-		self.__tb_Tempe.delete(0, None)
-		self.__tb_ID.delete(0, None)
-		self.__tb_Rep.delete(0, None)
-		self.__tb_Mod.delete(0, None)
-		self.__tb_Num.delete(0, None)
-		self.__tb_Empl.delete(0, None)
-		self.__tb_Autre.delete(0, None)
-		self.__tb_Meth.delete(0, None)
+		self.__tb_Espece.delete(0, 100)
+		self.__tb_Programme.delete(0, 100)
+		self.__tb_Tempe.delete(0, 100)
+		self.__tb_ID.delete(0, 100)
+		self.__tb_Rep.delete(0, 100)
+		self.__tb_Mod.delete(0, 100)
+		self.__tb_Num.delete(0, 100)
+		self.__tb_Empl.delete(0, 100)
+		self.__tb_Autre.delete(0, 100)
+		self.__tb_Meth.delete(0, 100)
 
 	def __Valider__(self):
 		#Ouvre une fenetre pour demander l'avis de l'utilisateur et lance la séquence si la répond est "oui"
@@ -194,7 +216,7 @@ class VueV2(object):
 		self.__root.update()
 		if reponse == True:
 			self.__root.update()
-			SQ = Sequence(self.__sb_jour.get(), self.__sb_TempsPrise1.get(), self.__sb_freq.get(), self.__tb_Espece.get(), self.__tb_Programme.get(), self.__tb_Tempe.get(), self.__tb_Meth.get(), self.__tb_ID.get(), self.__tb_Rep.get(), self.__tb_Mod.get(), self.__tb_Num.get(), self.__tb_Empl.get(), self.__tb_Autre.get())
+			SQ = Sequence(self.__sb_jour.get(), self.__sb_TempsPrise1.get(), self.__sb_freq.get(), self.__tb_Espece.get(), self.__tb_Programme.get(), self.__tb_Tempe.get(), self.__tb_Meth.get(), self.__tb_ID.get(), self.__tb_Rep.get(), self.__tb_Mod.get(), self.__tb_Num.get(), self.__tb_Empl.get(), self.__tb_Autre.get(), self.__sb_Debut.get(), self.__sb_Fin.get())
 			self.__root.update()
 			SQ.__Debut__()
 			
