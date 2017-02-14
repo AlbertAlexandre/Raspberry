@@ -1,0 +1,17 @@
+Periode : 1800.0
+Durée Totale : 259200.0
+Durée avant 1ere prise : 1800.0
+Date 1er fichier : 2017-02-06 11:37:19.414449
+Date dernier fichier : 2017-02-09 11:21:22.098572
+Nombre de photos total : 144
+Date de debut : 2017-02-06 11:07:13.583950
+Espece : Test
+Programme : Test
+Temperature : Test
+Méthode : Test
+Identifiant de l'échantillon : Test
+Numero de répétition ou sous-répétition : Test
+Modalité : Test
+Numéro de module : Test
+L'emplacement dans le module : Test
+Autre : Test
