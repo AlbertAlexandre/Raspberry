@@ -45,10 +45,13 @@ class Photo(object):
 		MaChaine = Esp + An + Mois + Jour + Heure + Min + "_" + NumCam + "_" + Num
 		Fichier_Config = open("conf.txt", "r")
 		Config = Fichier_Config.read()
+		#Lance la commande de photo
 		os.system("raspistill -o " + self.__Chemin + "/" + MaChaine + ".jpg " + Config)
+		#Si le champ macro n'était pas vide
 		if self.__Macro != "":
 			MaChaineMacro = 'open("' + self.__Chemin +'/' + MaChaine +'.jpg");\n' + 'run("' + self.__Macro + '");\n' + 'run("Save", "save=' + self.__Chemin + "/" + MaChaine + '.tif");\n eval("script", "System.exit(0);");'
 			print (MaChaineMacro)
+			#Demande à ImageJ d'ouvrir l'image d'appliquer la macro souhaité de sauvegarder l'image modifiée et de se fermer
 			os.system("imagej -e '" + MaChaineMacro + "'")
 		else:
 			print("Aucun traitement souhaité")

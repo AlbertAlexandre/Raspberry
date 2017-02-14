@@ -48,26 +48,37 @@ class Sequence(object):
 		
 		datedebut = str(datetime.datetime.now())
 		
-		if datetime.datetime.now().hour < int(self.__Debut) or datetime.datetime.now().hour >= int(self.__Fin):
+		if self.__Fin == "" or self.__Debut == "":
 			Temps = time.time()
 			self.__Photo__(Chemin)
+		
 		else:
-			print("Il fait nuit")
-		TSecPremiere = TSecPremiere - (time.time() - Temps)
-		time.sleep(TSecPremiere)
-		
-		date1 = str(datetime.datetime.now())
-		
-		while time.time() < Fin :
-			self.Compteur = self.Compteur + 1
 			if datetime.datetime.now().hour < int(self.__Debut) or datetime.datetime.now().hour >= int(self.__Fin):
 				Temps = time.time()
 				self.__Photo__(Chemin)
 			else:
 				print("Il fait nuit")
+				Temps = time.time()
+		TSecSleepPremiere = TSecPremiere - (time.time() - Temps)
+		time.sleep(TSecSleepPremiere)
+		
+		date1 = str(datetime.datetime.now())
+		
+		while time.time() < Fin :
+			self.Compteur = self.Compteur + 1
+			if self.__Fin == "" or self.__Debut == "":
+				Temps = time.time()
+				self.__Photo__(Chemin)
+			else:
+				if datetime.datetime.now().hour < int(self.__Debut) or datetime.datetime.now().hour >= int(self.__Fin) or self.__Fin == "" or self.__Debut == "":
+					Temps = time.time()
+					self.__Photo__(Chemin)
+				else:
+					print("Il fait nuit")
+					Temps = time.time()
 				
-			NbSecFreq = NbSecFreq - (time.time() - Temps)
-			time.sleep(NbSecFreq)
+			NbSecSleepFreq = NbSecFreq - (time.time() - Temps)
+			time.sleep(NbSecSleepFreq)
 		date2 = str(datetime.datetime.now())
 		self.__CreationFichierResume__(Chemin, date1, date2, datedebut)
 		showinfo("Information","Séquence Terminée")

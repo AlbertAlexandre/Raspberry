@@ -128,60 +128,67 @@ class VueV2(object):
 		self.__frameEP = Frame(self.__root)
 		self.__frameEP.pack(side=LEFT, fill=BOTH)
 
-		self.__lb_Espece = Label(self.__frameEP, text="Espèce : ")
+		self.__lb_Espece = Label(self.__frameEP, text="Espèce : ", pady = 5)
 		self.__lb_Espece.pack()
 		self.__tb_Espece = Entry(self.__frameEP)
 		self.__tb_Espece.pack()
 		
-		self.__lb_Programme = Label(self.__frameEP, text="Programme : ")
+		self.__lb_Programme = Label(self.__frameEP, text="Programme : ", pady = 5)
 		self.__lb_Programme.pack()
 		self.__tb_Programme  = Entry(self.__frameEP)
 		self.__tb_Programme.pack()
 		
-		self.__lb_Tempe = Label(self.__frameEP, text="Temperature : ")
+		self.__lb_Tempe = Label(self.__frameEP, text="Temperature : ", pady = 5)
 		self.__lb_Tempe.pack()
 		self.__tb_Tempe  = Entry(self.__frameEP)
 		self.__tb_Tempe.pack()
 		
-		self.__lb_Meth = Label(self.__frameEP, text="Methode : ")
+		self.__lb_Meth = Label(self.__frameEP, text="Methode : ", pady = 5)
 		self.__lb_Meth.pack()
 		self.__tb_Meth  = Entry(self.__frameEP)
 		self.__tb_Meth.pack()
 		
-		self.__lb_ID = Label(self.__frameEP, text="ID échantillon : ")
+		self.__lb_ID = Label(self.__frameEP, text="ID échantillon : ", pady = 5)
 		self.__lb_ID.pack()
 		self.__tb_ID  = Entry(self.__frameEP)
 		self.__tb_ID.pack()
 		
+		#technique pas très propre pour faire de l'espace
+		self.__lb_Rien = Label(self.__frameEP, text=" ", pady = 7)
+		self.__lb_Rien.pack()
 		
 		
 		self.__frameSUITE = Frame(self.__root)
 		self.__frameSUITE.pack(side=RIGHT, fill=BOTH)
 		
-		self.__lb_Rep = Label(self.__frameSUITE, text="Répétition / sous-répétition : ")
+		self.__lb_Rep = Label(self.__frameSUITE, text="Répétition / sous-répétition : ", pady = 5)
 		self.__lb_Rep.pack()
 		self.__tb_Rep = Entry(self.__frameSUITE)
 		self.__tb_Rep.pack()
 		
-		self.__lb_Mod = Label(self.__frameSUITE, text="Modalité : ")
+		self.__lb_Mod = Label(self.__frameSUITE, text="Modalité : ", pady = 5)
 		self.__lb_Mod.pack()
 		self.__tb_Mod  = Entry(self.__frameSUITE)
 		self.__tb_Mod.pack()
 		
-		self.__lb_Num = Label(self.__frameSUITE, text="Numéro de module : ")
+		self.__lb_Num = Label(self.__frameSUITE, text="Numéro de module : ", pady = 5)
 		self.__lb_Num.pack()
 		self.__tb_Num  = Entry(self.__frameSUITE)
 		self.__tb_Num.pack()
 		
-		self.__lb_Empl = Label(self.__frameSUITE, text="Emplacement dans le module : ")
+		self.__lb_Empl = Label(self.__frameSUITE, text="Emplacement dans le module : ", pady = 5)
 		self.__lb_Empl.pack()
 		self.__tb_Empl  = Entry(self.__frameSUITE)
 		self.__tb_Empl.pack()
 		
-		self.__lb_Autre = Label(self.__frameSUITE, text="Autre : ")
+		self.__lb_Autre = Label(self.__frameSUITE, text="Autre : ", pady = 5)
 		self.__lb_Autre.pack()
 		self.__tb_Autre  = Entry(self.__frameSUITE)
 		self.__tb_Autre.pack()
+		
+		#technique pas très propre pour faire de l'espace
+		self.__lb_rien = Label(self.__frameSUITE, text=" ", pady = 7)
+		self.__lb_rien.pack()
 		
 		self.__btn_Config = Button(self.__frameSUITE, text="Configuration caméra", command = self.__InterfaceConfig__)
 		self.__btn_Config.pack()
